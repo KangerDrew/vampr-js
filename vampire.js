@@ -44,7 +44,40 @@ class Vampire {
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   closestCommonAncestor(vampire) {
+    const selfAncestor = [];
+    const otherAncestor = [];
+    
+    // Add yourself, and all your ancestors in
+    // the array.
+    let selfVal = this;
+    while(selfVal) {
+      selfAncestor.push(selfVal);
+      selfVal = selfVal.creator;
+    }
 
+    // Do the same for the vampier you're checking
+    let otherVal = vampire;
+    while(otherVal) {
+      otherAncestor.push(otherVal);
+      otherVal = otherVal.creator;
+    }
+
+    // Use for loop to compare selfAncestor list against
+    // the otherAncestor list. If the name matches, it means
+    // that's the name of the common ancestor. WARNING! THIS
+    // DOES NOT ACCOUNT FOR SITUATION WHERE ANCESTORS SHARE 
+    // IDENTICAL NAME...
+
+    for(let ancestor1 of selfAncestor){
+      
+      for(let ancestor2 of otherAncestor) {
+        if(ancestor1.name === ancestor2.name) {
+          return ancestor1;
+        }
+      }
+    }
+
+    return undefined;
   }
 }
 
